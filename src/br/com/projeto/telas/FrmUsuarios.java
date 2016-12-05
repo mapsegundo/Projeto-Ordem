@@ -22,8 +22,8 @@ public class FrmUsuarios extends javax.swing.JFrame {
     public FrmUsuarios() {
         initComponents();
     }
-    
-    public void limparCampos(){
+
+    public void limparCampos() {
         //Limpar campos
         txtCodigo.setText("");
         txtUsuario.setText("");
@@ -42,8 +42,6 @@ public class FrmUsuarios extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        txtSenha = new javax.swing.JTextField();
-        txtRepitaSenha = new javax.swing.JTextField();
         cbNivel = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -52,6 +50,8 @@ public class FrmUsuarios extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         txtUsuario = new javax.swing.JTextField();
+        txtSenha = new javax.swing.JPasswordField();
+        txtRepitaSenha = new javax.swing.JPasswordField();
         btnSalvar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
@@ -69,12 +69,6 @@ public class FrmUsuarios extends javax.swing.JFrame {
         jLabel1.setToolTipText("");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados do Usuário"));
-
-        txtRepitaSenha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtRepitaSenhaActionPerformed(evt);
-            }
-        });
 
         cbNivel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Funcionário", "Gerente", "Diretor" }));
 
@@ -102,12 +96,14 @@ public class FrmUsuarios extends javax.swing.JFrame {
                         .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtRepitaSenha, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtUsuario, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtSenha)
-                    .addComponent(cbNivel, javax.swing.GroupLayout.Alignment.LEADING, 0, 536, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtCodigo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtUsuario, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(cbNivel, javax.swing.GroupLayout.Alignment.LEADING, 0, 536, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(txtRepitaSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+                        .addComponent(txtSenha, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -212,10 +208,6 @@ public class FrmUsuarios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtRepitaSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRepitaSenhaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtRepitaSenhaActionPerformed
-
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         limparCampos();
     }//GEN-LAST:event_btnNovoActionPerformed
@@ -231,13 +223,19 @@ public class FrmUsuarios extends javax.swing.JFrame {
             usuario.setNivelAcesso(cbNivel.getSelectedItem().toString());
             usuario.setCargo(usuario.getNivelAcesso());
 
-            //Criar objeto da classe UsuarioDAO
-            UsuariosDAO dao = new UsuariosDAO();
-            dao.cadastrarUsuario(usuario);
-            JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!");
+            //Verificar senha
+            if (usuario.getSenha().equals(usuario.getRepitaSenha())) {
 
-            //Limpar campos
-            limparCampos();
+                //Criar objeto da classe UsuarioDAO
+                UsuariosDAO dao = new UsuariosDAO();
+                dao.cadastrarUsuario(usuario);
+                JOptionPane.showMessageDialog(null, "Cadastrado com Sucesso!");
+
+                //Limpar campos
+                limparCampos();
+            } else {
+                JOptionPane.showMessageDialog(null, "Senha de confirmação incorreta!");
+            }
         } catch (SQLException e) {
             //System.out.println(e);
             JOptionPane.showMessageDialog(null, "Erro ao Cadastrar: " + e);
@@ -295,8 +293,8 @@ public class FrmUsuarios extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaUsuario;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtRepitaSenha;
-    private javax.swing.JTextField txtSenha;
+    private javax.swing.JPasswordField txtRepitaSenha;
+    private javax.swing.JPasswordField txtSenha;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }
