@@ -9,7 +9,10 @@ import br.com.projeto.jdbc.ConnectionFactory;
 import br.com.projeto.modelos.Usuarios;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -98,6 +101,37 @@ public class UsuariosDAO {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public List<Usuarios> listarTodosUsuarios() {
+        List<Usuarios> listaUsuarios = null;
+        try {
+            //Criar vetor que vai armazenar os usuarios
+            listaUsuarios = new ArrayList<>();
+
+            //Criar comando SQL
+            String cmdSql = "SELECT * from tbusuarios";
+
+            //Executar o comando
+            PreparedStatement stmt = conexao.prepareStatement(cmdSql);
+            ResultSet rs = stmt.executeQuery();
+            
+            //Percorrer os resultados no RS e colocados dentro da lista
+            while(rs.next()){
+                Usuarios usuario = new Usuarios();
+                usuario.setIdUsuario(rs.getInt("idUsuario"));
+                usuario.setUsuario(rs.getString("usuario"));
+                usuario.setSenha(rs.getString("senha"));
+                usuario.setRepitaSenha(rs.getString("repitaSenha"));
+                usuario.setNivelAcesso(rs.getString("nivelAcesso"));
+                
+                listaUsuarios.add(usuario);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao montar a lista: "+e);
+        }
+        return listaUsuarios;
     }
 
 }

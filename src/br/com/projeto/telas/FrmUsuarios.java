@@ -8,7 +8,10 @@ package br.com.projeto.telas;
 import br.com.projeto.dao.UsuariosDAO;
 import br.com.projeto.modelos.Usuarios;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -29,6 +32,40 @@ public class FrmUsuarios extends javax.swing.JFrame {
         txtUsuario.setText("");
         txtSenha.setText("");
         txtRepitaSenha.setText("");
+        cbNivel.setSelectedItem("Funcionário");
+    }
+
+    public Boolean verificaSenha() {
+        return txtSenha.getText().equals(txtRepitaSenha.getText());
+    }
+
+    //Metodo listar todos os usuarios
+    public void listarTodos() {
+        try {
+            // Listar todos os usuários
+            UsuariosDAO dao = new UsuariosDAO();
+            List<Usuarios> usuarios = dao.listarTodosUsuarios();
+
+            //Criando objeto que vai guardar os registros e a estrutura da tabela
+            DefaultTableModel modelo = (DefaultTableModel) tabelaUsuario.getModel();
+
+            //Para não duplicar os registros
+            modelo.setNumRows(0);
+
+            //Percorrer os registros que estão em listadeusuarios para colocá-los dentro do objeto modelo
+            for (Usuarios usuario : usuarios) {
+                modelo.addRow(new Object[]{
+                    usuario.getIdUsuario(),
+                    usuario.getUsuario(),
+                    usuario.getSenha(),
+                    usuario.getRepitaSenha(),
+                    usuario.getNivelAcesso()
+                });
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao criar a tabela: " + e);
+        }
     }
 
     /**
@@ -61,8 +98,12 @@ public class FrmUsuarios extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Projeto Ordem");
-        setPreferredSize(new java.awt.Dimension(739, 501));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Controle de Usuário");
@@ -143,8 +184,18 @@ public class FrmUsuarios extends javax.swing.JFrame {
         });
 
         btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnNovo.setText("Novo");
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -164,6 +215,20 @@ public class FrmUsuarios extends javax.swing.JFrame {
                 "Código", "Usuário", "Senha", "Confirmação", "Nível"
             }
         ));
+        tabelaUsuario.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                tabelaUsuarioAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        tabelaUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaUsuarioMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelaUsuario);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -201,8 +266,8 @@ public class FrmUsuarios extends javax.swing.JFrame {
                     .addComponent(btnExcluir)
                     .addComponent(btnNovo))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
         );
 
         pack();
@@ -224,7 +289,7 @@ public class FrmUsuarios extends javax.swing.JFrame {
             usuario.setCargo(usuario.getNivelAcesso());
 
             //Verificar senha
-            if (usuario.getSenha().equals(usuario.getRepitaSenha())) {
+            if (verificaSenha() == true) {
 
                 //Criar objeto da classe UsuarioDAO
                 UsuariosDAO dao = new UsuariosDAO();
@@ -233,6 +298,9 @@ public class FrmUsuarios extends javax.swing.JFrame {
 
                 //Limpar campos
                 limparCampos();
+
+                //Liste usuarios
+                listarTodos();
             } else {
                 JOptionPane.showMessageDialog(null, "Senha de confirmação incorreta!");
             }
@@ -241,6 +309,76 @@ public class FrmUsuarios extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro ao Cadastrar: " + e);
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        listarTodos();
+    }//GEN-LAST:event_formWindowActivated
+
+    private void tabelaUsuarioAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tabelaUsuarioAncestorAdded
+        listarTodos();
+    }//GEN-LAST:event_tabelaUsuarioAncestorAdded
+
+    private void tabelaUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaUsuarioMouseClicked
+        // Captura dados
+        txtCodigo.setText(tabelaUsuario.getValueAt(tabelaUsuario.getSelectedRow(), 0).toString());
+        txtUsuario.setText(tabelaUsuario.getValueAt(tabelaUsuario.getSelectedRow(), 1).toString());
+        txtSenha.setText(tabelaUsuario.getValueAt(tabelaUsuario.getSelectedRow(), 2).toString());
+        txtRepitaSenha.setText(tabelaUsuario.getValueAt(tabelaUsuario.getSelectedRow(), 3).toString());
+        cbNivel.setSelectedItem(tabelaUsuario.getValueAt(tabelaUsuario.getSelectedRow(), 4).toString());
+    }//GEN-LAST:event_tabelaUsuarioMouseClicked
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        // Botao Alterar
+        try {
+            //Criar objeto para guardar os dados da tela
+            Usuarios usuario = new Usuarios();
+            usuario.setUsuario(txtUsuario.getText());
+            usuario.setSenha(txtSenha.getText());
+            usuario.setRepitaSenha(txtRepitaSenha.getText());
+            usuario.setNivelAcesso(cbNivel.getSelectedItem().toString());
+            usuario.setCargo(usuario.getNivelAcesso());
+            //Pegando o codigo do usuario para converter
+            usuario.setIdUsuario(Integer.parseInt(txtCodigo.getText()));
+
+            if (verificaSenha() == true) {
+                UsuariosDAO dao = new UsuariosDAO();
+                dao.alterarUsuario(usuario);
+                JOptionPane.showMessageDialog(null, "Usuário alterado com sucesso!");
+
+                //Atualizando a tabela
+                listarTodos();
+
+                //Limpa campos
+                limparCampos();
+            } else {
+                JOptionPane.showMessageDialog(null, "Senha de confirmação incorreta!");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível alterar o usuário " + txtUsuario.getText());
+            //System.out.println("Erro ao alterar o usuário: " + e);
+        }
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        // Botao Excluir
+        try {
+            Usuarios usuario = new Usuarios();
+            usuario.setIdUsuario(Integer.parseInt(txtCodigo.getText()));
+
+            UsuariosDAO dao = new UsuariosDAO();
+            dao.excluirUsuario(usuario);
+            JOptionPane.showMessageDialog(null, "Usuário excluído com sucesso!");
+
+            //Atualizando a tabela
+            listarTodos();
+
+            //Limpa campos
+            limparCampos();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível excluir o usuário " + txtUsuario.getText());
+            //System.out.println("Erro ao excluir o usuário: " + e);
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
