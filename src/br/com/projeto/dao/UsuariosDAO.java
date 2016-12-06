@@ -133,5 +133,37 @@ public class UsuariosDAO {
         }
         return listaUsuarios;
     }
+    
+    public List<Usuarios> listarPorUsuario(String nomeUsuario) {
+        List<Usuarios> listaUsuarios = null;
+        try {
+            //Criar vetor que vai armazenar os usuarios
+            listaUsuarios = new ArrayList<>();
+
+            //Criar comando SQL
+            String cmdSql = "SELECT * from tbusuarios where usuario like ?";
+
+            //Executar o comando
+            PreparedStatement stmt = conexao.prepareStatement(cmdSql);
+            stmt.setString(1, "%"+nomeUsuario+"%");
+            ResultSet rs = stmt.executeQuery();
+            
+            //Percorrer os resultados no RS e colocados dentro da lista
+            while(rs.next()){
+                Usuarios usuario = new Usuarios();
+                usuario.setIdUsuario(rs.getInt("idUsuario"));
+                usuario.setUsuario(rs.getString("usuario"));
+                usuario.setSenha(rs.getString("senha"));
+                usuario.setRepitaSenha(rs.getString("repitaSenha"));
+                usuario.setNivelAcesso(rs.getString("nivelAcesso"));
+                
+                listaUsuarios.add(usuario);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao montar a lista: "+e);
+        }
+        return listaUsuarios;
+    }
 
 }
