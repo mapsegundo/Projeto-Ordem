@@ -53,6 +53,7 @@ public class FrmOrdemServico extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Projeto Ordem");
         setPreferredSize(new java.awt.Dimension(739, 604));
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setText("Ordem de Serviço");

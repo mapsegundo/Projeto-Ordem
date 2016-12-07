@@ -5,6 +5,8 @@
  */
 package br.com.projeto.modelos;
 
+import java.util.Date;
+
 /**
  *
  * @author Shall
@@ -19,7 +21,7 @@ public class Clientes {
     private String bairro;
     private String cidade;
     private String estado;
-    private String dataCadastro;
+    private Date dataCadastro;
 
     public int getIdCliente() {
         return idCliente;
@@ -85,11 +87,11 @@ public class Clientes {
         this.estado = estado;
     }
 
-    public String getDataCadastro() {
+    public Date getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(String dataCadastro) {
+    public void setDataCadastro(Date dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
     

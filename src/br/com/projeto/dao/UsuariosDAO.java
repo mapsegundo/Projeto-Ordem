@@ -57,7 +57,7 @@ public class UsuariosDAO {
 
         try {
             //Criar comando SQL
-            String cmdSql = "UPDATE tbusuarios set usuario = ?, senha =?, repitaSenha =?, nivelAcesso=? where idUsuario =?";
+            String cmdSql = "UPDATE tbusuarios set usuario = ?, senha =?, repitaSenha =?, nivelAcesso=?, cargo=? where idUsuario =?";
 
             //Estruturar o comando
             PreparedStatement stmt = conexao.prepareStatement(cmdSql);
@@ -66,7 +66,8 @@ public class UsuariosDAO {
             stmt.setString(2, usuario.getSenha());
             stmt.setString(3, usuario.getRepitaSenha());
             stmt.setString(4, usuario.getNivelAcesso());
-            stmt.setInt(5, usuario.getIdUsuario());
+            stmt.setString(5, usuario.getCargo());
+            stmt.setInt(6, usuario.getIdUsuario());
 
             //Executar o comando
             stmt.execute();
