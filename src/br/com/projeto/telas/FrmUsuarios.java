@@ -144,9 +144,8 @@ public class FrmUsuarios extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(txtRepitaSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
-                        .addComponent(txtSenha, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(txtRepitaSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
+                    .addComponent(txtSenha)
                     .addComponent(txtUsuario)
                     .addComponent(cbNivel, 0, 359, Short.MAX_VALUE))
                 .addContainerGap(22, Short.MAX_VALUE))
@@ -243,6 +242,11 @@ public class FrmUsuarios extends javax.swing.JFrame {
 
         jLabel7.setText("Usuário:");
 
+        txtConsultarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtConsultarUsuarioActionPerformed(evt);
+            }
+        });
         txtConsultarUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtConsultarUsuarioKeyPressed(evt);
@@ -455,6 +459,10 @@ public class FrmUsuarios extends javax.swing.JFrame {
             System.out.println("Erro ao criar a tabela: " + e);
         }
     }//GEN-LAST:event_txtConsultarUsuarioKeyPressed
+
+    private void txtConsultarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConsultarUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtConsultarUsuarioActionPerformed
 
     /**
      * @param args the command line arguments

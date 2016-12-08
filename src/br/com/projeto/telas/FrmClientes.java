@@ -7,6 +7,7 @@ package br.com.projeto.telas;
 
 import br.com.projeto.dao.ClientesDAO;
 import br.com.projeto.modelos.Clientes;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -98,9 +99,9 @@ public class FrmClientes extends javax.swing.JFrame {
         txtBairro = new javax.swing.JTextField();
         txtCidade = new javax.swing.JTextField();
         txtEstado = new javax.swing.JTextField();
-        txtDataCadastro = new javax.swing.JTextField();
         txtCpf = new javax.swing.JFormattedTextField();
         txtTelefone = new javax.swing.JFormattedTextField();
+        txtDataCadastro = new javax.swing.JFormattedTextField();
         btnSalvar = new javax.swing.JButton();
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
@@ -148,13 +149,6 @@ public class FrmClientes extends javax.swing.JFrame {
             }
         });
 
-        txtDataCadastro.setEditable(false);
-        txtDataCadastro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDataCadastroActionPerformed(evt);
-            }
-        });
-
         try {
             txtCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
@@ -166,6 +160,9 @@ public class FrmClientes extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+
+        txtDataCadastro.setEditable(false);
+        txtDataCadastro.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -199,7 +196,7 @@ public class FrmClientes extends javax.swing.JFrame {
                     .addComponent(txtBairro)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -338,10 +335,6 @@ public class FrmClientes extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCidadeActionPerformed
 
-    private void txtDataCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataCadastroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDataCadastroActionPerformed
-
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // Botao para salvar o cliente
         try {
@@ -385,7 +378,10 @@ public class FrmClientes extends javax.swing.JFrame {
         txtBairro.setText(tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 5).toString());
         txtCidade.setText(tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 6).toString());
         txtEstado.setText(tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 7).toString());
-        txtDataCadastro.setText(tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 8).toString());
+        Date recebeData = (Date) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 8);
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String recebeDataEmString = df.format(recebeData);
+        txtDataCadastro.setText(recebeDataEmString);
     }//GEN-LAST:event_tabelaClientesMouseClicked
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
@@ -489,7 +485,7 @@ public class FrmClientes extends javax.swing.JFrame {
     private javax.swing.JTextField txtBairro;
     private javax.swing.JTextField txtCidade;
     private javax.swing.JFormattedTextField txtCpf;
-    private javax.swing.JTextField txtDataCadastro;
+    private javax.swing.JFormattedTextField txtDataCadastro;
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtEstado;
     private javax.swing.JTextField txtId;

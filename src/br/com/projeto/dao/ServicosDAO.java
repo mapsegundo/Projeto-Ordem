@@ -89,7 +89,7 @@ public class ServicosDAO {
         }
     }
     
-    public void excluirCliente(Servicos servico) throws SQLException {
+    public void excluirServico(Servicos servico) throws SQLException {
 
         try {
             //Criar comando SQL
@@ -123,6 +123,40 @@ public class ServicosDAO {
 
             //Executar o comando
             PreparedStatement stmt = conexao.prepareStatement(cmdSql);
+            ResultSet rs = stmt.executeQuery();
+            
+            //Percorrer os resultados no RS e colocados dentro da lista
+            Servicos servico;
+            while(rs.next()){
+                servico = new Servicos();
+                servico.setIdServico(rs.getInt("idServico"));
+                servico.setNomeServico(rs.getString("nomeServico"));
+                servico.setDescricao(rs.getString("descricao"));
+                servico.setObservacao(rs.getString("observacao"));
+                servico.setValor(rs.getDouble("valor"));
+                servico.setDataCadastro(rs.getDate("dataCadastro"));
+                
+                listaServicos.add(servico);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao montar a lista: "+e);
+        }
+        return listaServicos;
+    }
+    
+    public List<Servicos> listarPorIdServico(String id) {
+        List<Servicos> listaServicos = null;
+        try {
+            //Criar vetor que vai armazenar os usuarios
+            listaServicos = new ArrayList<>();
+
+            //Criar comando SQL
+            String cmdSql = "SELECT * from tbservicos where idServico=?";
+
+            //Executar o comando
+            PreparedStatement stmt = conexao.prepareStatement(cmdSql);
+            stmt.setInt(1, Integer.parseInt(id));
             ResultSet rs = stmt.executeQuery();
             
             //Percorrer os resultados no RS e colocados dentro da lista
