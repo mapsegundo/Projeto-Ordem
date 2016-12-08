@@ -190,7 +190,7 @@ public class FrmOrdemServico extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Código", "Cliente", "Usuário", "Descrição", "Data", "Hora", "Serviço"
+                "ID", "Cliente", "Serviço", "Usuário", "Descrição", "Data Cadastro", "Hora Serviço"
             }
         ));
         jScrollPane2.setViewportView(tabelaOS);
