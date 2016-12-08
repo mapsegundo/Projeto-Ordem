@@ -5,6 +5,8 @@
  */
 package br.com.projeto.modelos;
 
+import java.sql.Date;
+
 /**
  *
  * @author Shall
@@ -14,9 +16,9 @@ public class Servicos {
     private  int idServico;
     private String nomeServico;
     private String descricao;
-    private String obs;
+    private String observacao;
     private double valor;
-    private String dataCadastro;
+    private Date dataCadastro;
 
     public int getIdServico() {
         return idServico;
@@ -42,12 +44,12 @@ public class Servicos {
         this.descricao = descricao;
     }
 
-    public String getObs() {
-        return obs;
+    public String getObservacao() {
+        return observacao;
     }
 
-    public void setObs(String obs) {
-        this.obs = obs;
+    public void setObservacao(String obs) {
+        this.observacao = obs;
     }
 
     public double getValor() {
@@ -58,11 +60,11 @@ public class Servicos {
         this.valor = valor;
     }
 
-    public String getDataCadastro() {
+    public Date getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(String dataCadastro) {
+    public void setDataCadastro(Date dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
     
