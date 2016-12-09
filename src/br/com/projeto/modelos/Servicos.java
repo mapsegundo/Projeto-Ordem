@@ -67,6 +67,11 @@ public class Servicos {
     public void setDataCadastro(Date dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
+
+    @Override
+    public String toString() {
+        return this.nomeServico;
+    }
     
     
 }

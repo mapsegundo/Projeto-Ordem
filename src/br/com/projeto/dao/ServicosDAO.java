@@ -112,7 +112,7 @@ public class ServicosDAO {
 
     }
     
-    public List<Servicos> listarTodosClientes() {
+    public List<Servicos> listarTodosServicos() {
         List<Servicos> listaServicos = null;
         try {
             //Criar vetor que vai armazenar os usuarios

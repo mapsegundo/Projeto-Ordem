@@ -66,4 +66,10 @@ public class Usuarios {
         this.nivelAcesso = nivelAcesso;
     }
 
+    @Override
+    public String toString() {
+        return this.usuario;
+    }
+
+    
 }

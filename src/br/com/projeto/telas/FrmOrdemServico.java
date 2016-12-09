@@ -5,11 +5,28 @@
  */
 package br.com.projeto.telas;
 
+import br.com.projeto.dao.ClientesDAO;
+import br.com.projeto.dao.OrdemServicoDAO;
+import br.com.projeto.dao.ServicosDAO;
+import br.com.projeto.dao.UsuariosDAO;
+import br.com.projeto.modelos.Clientes;
+import br.com.projeto.modelos.OrdemServicos;
+import br.com.projeto.modelos.Servicos;
+import br.com.projeto.modelos.Usuarios;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Shall
  */
 public class FrmOrdemServico extends javax.swing.JFrame {
+
+    private int idCliente;
+    private int idUsuario;
+    private int idServico;
 
     /**
      * Creates new form FrmOrdemServicos
@@ -41,7 +58,7 @@ public class FrmOrdemServico extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescricao = new javax.swing.JTextArea();
         txtData = new com.toedter.calendar.JDateChooser();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        txtHora = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         cbFiltro = new javax.swing.JComboBox<>();
@@ -49,6 +66,9 @@ public class FrmOrdemServico extends javax.swing.JFrame {
         txtFiltro = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelaOS = new javax.swing.JTable();
+        btnSalvar = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Projeto Ordem");
@@ -69,6 +89,36 @@ public class FrmOrdemServico extends javax.swing.JFrame {
 
         jLabel5.setText("Descrição:");
 
+        cbCliente.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                cbClienteAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
+        cbUsuario.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                cbUsuarioAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
+        cbServico.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                cbServicoAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
         jLabel6.setText("Data:");
 
         jLabel7.setText("Hora:");
@@ -78,11 +128,11 @@ public class FrmOrdemServico extends javax.swing.JFrame {
         jScrollPane1.setViewportView(txtDescricao);
 
         try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
+            txtHora.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##:##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        jFormattedTextField1.setToolTipText("");
+        txtHora.setToolTipText("");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -109,12 +159,12 @@ public class FrmOrdemServico extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(60, 60, 60))
+                                .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())
                             .addComponent(cbUsuario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -135,7 +185,7 @@ public class FrmOrdemServico extends javax.swing.JFrame {
                         .addComponent(cbServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel6)
                         .addComponent(jLabel7)
-                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,6 +245,17 @@ public class FrmOrdemServico extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tabelaOS);
 
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        btnAlterar.setText("Alterar");
+
+        btnExcluir.setText("Excluir");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -202,10 +263,16 @@ public class FrmOrdemServico extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 709, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                    .addComponent(jScrollPane2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnAlterar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -213,8 +280,17 @@ public class FrmOrdemServico extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(btnSalvar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAlterar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnExcluir)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -228,6 +304,76 @@ public class FrmOrdemServico extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        try{
+            OrdemServicos os = new OrdemServicos();
+            Clientes cliente = (Clientes)cbCliente.getSelectedItem();
+            idCliente = cliente.getIdCliente();
+            
+            Usuarios usuario = (Usuarios)cbUsuario.getSelectedItem();
+            idUsuario = usuario.getIdUsuario();
+            
+            Servicos servico = (Servicos)cbServico.getSelectedItem();
+            idServico = servico.getIdServico();
+            
+            //Preenche o objeto OS com os dados capturados da tela
+            os.setFkIdCliente(idCliente);
+            os.setFkIdUsuario(idUsuario);
+            os.setFkIdServico(idServico);
+            os.setDescricaoServico(txtDescricao.getText());
+            
+            //Formatar Data
+            Date data = txtData.getDate();
+            SimpleDateFormat formata = new SimpleDateFormat("yyyy-MM-dd");
+            os.setDataCadastro(formata.format(data));
+            os.setHoraServico(txtHora.getText());
+            
+            OrdemServicoDAO dao = new OrdemServicoDAO();
+            dao.cadastrarOS(os);
+            
+            JOptionPane.showMessageDialog(null, "Ordem de serviço salva com sucesso");
+            
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar OS: "+e);
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void cbClienteAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbClienteAncestorAdded
+        try{
+            ClientesDAO dao = new ClientesDAO();
+            List<Clientes> listaClientes = dao.listarTodosClientes();
+            for(Clientes cliente : listaClientes){
+                cbCliente.addItem(cliente);
+            }
+        }catch(Exception e){
+            
+        }
+    }//GEN-LAST:event_cbClienteAncestorAdded
+
+    private void cbUsuarioAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbUsuarioAncestorAdded
+        try{
+            UsuariosDAO dao = new UsuariosDAO();
+            List<Usuarios> listaUsuarios = dao.listarTodosUsuarios();
+            for(Usuarios usuario : listaUsuarios){
+                cbUsuario.addItem(usuario);
+            }
+        }catch(Exception e){
+            
+        }
+    }//GEN-LAST:event_cbUsuarioAncestorAdded
+
+    private void cbServicoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbServicoAncestorAdded
+        try{
+            ServicosDAO dao = new ServicosDAO();
+            List<Servicos> listaServicos = dao.listarTodosServicos();
+            for(Servicos servico : listaServicos){
+                cbServico.addItem(servico);
+            }
+        }catch(Exception e){
+            
+        }
+    }//GEN-LAST:event_cbServicoAncestorAdded
 
     /**
      * @param args the command line arguments
@@ -266,12 +412,14 @@ public class FrmOrdemServico extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlterar;
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JComboBox<String> cbCliente;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnSalvar;
+    private javax.swing.JComboBox<Object> cbCliente;
     private javax.swing.JComboBox<String> cbFiltro;
-    private javax.swing.JComboBox<String> cbServico;
-    private javax.swing.JComboBox<String> cbUsuario;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JComboBox<Object> cbServico;
+    private javax.swing.JComboBox<Object> cbUsuario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -288,5 +436,6 @@ public class FrmOrdemServico extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser txtData;
     private javax.swing.JTextArea txtDescricao;
     private javax.swing.JTextField txtFiltro;
+    private javax.swing.JFormattedTextField txtHora;
     // End of variables declaration//GEN-END:variables
 }

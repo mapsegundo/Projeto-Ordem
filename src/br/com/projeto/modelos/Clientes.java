@@ -94,7 +94,9 @@ public class Clientes {
     public void setDataCadastro(Date dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return this.nome; 
+    }
 }

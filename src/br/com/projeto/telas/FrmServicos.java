@@ -47,7 +47,7 @@ public class FrmServicos extends javax.swing.JFrame {
         try {
             // Listar todos os usuários
             ServicosDAO dao = new ServicosDAO();
-            List<Servicos> servicos = dao.listarTodosClientes();
+            List<Servicos> servicos = dao.listarTodosServicos();
 
             //Criando objeto que vai guardar os registros e a estrutura da tabela
             DefaultTableModel modelo = (DefaultTableModel) tabelaServicos.getModel();
