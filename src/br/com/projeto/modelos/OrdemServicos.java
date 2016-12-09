@@ -12,9 +12,9 @@ package br.com.projeto.modelos;
 public class OrdemServicos {
 
     private int idOrdem;
-    private int fkIdCliente;
-    private int fkIdServico;
-    private int fkIdUsuario;
+    private Clientes fkIdCliente;
+    private Servicos fkIdServico;
+    private Usuarios fkIdUsuario;
     private String descricaoServico;
     private String dataCadastro;
     private String horaServico;
@@ -27,27 +27,27 @@ public class OrdemServicos {
         this.idOrdem = idOrdem;
     }
 
-    public int getFkIdCliente() {
+    public Clientes getFkIdCliente() {
         return fkIdCliente;
     }
 
-    public void setFkIdCliente(int fkIdCliente) {
+    public void setFkIdCliente(Clientes fkIdCliente) {
         this.fkIdCliente = fkIdCliente;
     }
 
-    public int getFkIdServico() {
+    public Servicos getFkIdServico() {
         return fkIdServico;
     }
 
-    public void setFkIdServico(int fkIdServico) {
+    public void setFkIdServico(Servicos fkIdServico) {
         this.fkIdServico = fkIdServico;
     }
 
-    public int getFkIdUsuario() {
+    public Usuarios getFkIdUsuario() {
         return fkIdUsuario;
     }
 
-    public void setFkIdUsuario(int fkIdUsuario) {
+    public void setFkIdUsuario(Usuarios fkIdUsuario) {
         this.fkIdUsuario = fkIdUsuario;
     }
 

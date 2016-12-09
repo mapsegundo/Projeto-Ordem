@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,15 +25,52 @@ import javax.swing.JOptionPane;
  */
 public class FrmOrdemServico extends javax.swing.JFrame {
 
-    private int idCliente;
-    private int idUsuario;
-    private int idServico;
-
     /**
      * Creates new form FrmOrdemServicos
      */
     public FrmOrdemServico() {
         initComponents();
+    }
+
+    public void pegarHora() {
+        Date minhaHora = new Date();
+        SimpleDateFormat formataHora = new SimpleDateFormat("HH:mm:ss");
+        txtHora.setText(formataHora.format(minhaHora));
+    }
+
+    // Metodo para limpar campos
+    public void limparCampos() {
+        txtDescricao.setText("");
+        txtData.setDate(null);
+        pegarHora();
+    }
+
+    // Metodo para listar todas as OS
+    public List<OrdemServicos> listarOS() {
+        try {
+            OrdemServicoDAO dao = new OrdemServicoDAO();
+            List<OrdemServicos> listaOS = dao.listarTodasOSComInnerJoin();
+
+            //Criando o objeto que vai guardar os registros e a estrutura da tabela
+            DefaultTableModel modelo = (DefaultTableModel) tabelaOS.getModel();
+
+            modelo.setNumRows(0);
+
+            //Percorrer os registros que estão na listaOS
+            for (OrdemServicos os : listaOS) {
+                modelo.addRow(new Object[]{
+                    os.getIdOrdem(),
+                    os.getFkIdCliente(),
+                    os.getFkIdServico(),
+                    os.getFkIdUsuario(),
+                    os.getDescricaoServico(),
+                    os.getDataCadastro(),
+                    os.getHoraServico()
+                });
+            }
+        } catch (Exception e) {
+        }
+        return null;
     }
 
     /**
@@ -74,6 +112,11 @@ public class FrmOrdemServico extends javax.swing.JFrame {
         setTitle("Projeto Ordem");
         setPreferredSize(new java.awt.Dimension(739, 604));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setText("Ordem de Serviço");
@@ -127,6 +170,7 @@ public class FrmOrdemServico extends javax.swing.JFrame {
         txtDescricao.setRows(5);
         jScrollPane1.setViewportView(txtDescricao);
 
+        txtHora.setEditable(false);
         try {
             txtHora.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##:##")));
         } catch (java.text.ParseException ex) {
@@ -255,6 +299,11 @@ public class FrmOrdemServico extends javax.swing.JFrame {
         btnAlterar.setText("Alterar");
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -306,74 +355,84 @@ public class FrmOrdemServico extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        try{
+        try {
             OrdemServicos os = new OrdemServicos();
-            Clientes cliente = (Clientes)cbCliente.getSelectedItem();
-            idCliente = cliente.getIdCliente();
-            
-            Usuarios usuario = (Usuarios)cbUsuario.getSelectedItem();
-            idUsuario = usuario.getIdUsuario();
-            
-            Servicos servico = (Servicos)cbServico.getSelectedItem();
-            idServico = servico.getIdServico();
-            
+            Clientes cliente = (Clientes) cbCliente.getSelectedItem();
+            Usuarios usuario = (Usuarios) cbUsuario.getSelectedItem();
+            Servicos servico = (Servicos) cbServico.getSelectedItem();
+
             //Preenche o objeto OS com os dados capturados da tela
-            os.setFkIdCliente(idCliente);
-            os.setFkIdUsuario(idUsuario);
-            os.setFkIdServico(idServico);
+            os.setFkIdCliente(cliente);
+            os.setFkIdUsuario(usuario);
+            os.setFkIdServico(servico);
             os.setDescricaoServico(txtDescricao.getText());
-            
+
             //Formatar Data
             Date data = txtData.getDate();
             SimpleDateFormat formata = new SimpleDateFormat("yyyy-MM-dd");
             os.setDataCadastro(formata.format(data));
             os.setHoraServico(txtHora.getText());
-            
+
             OrdemServicoDAO dao = new OrdemServicoDAO();
             dao.cadastrarOS(os);
-            
+
             JOptionPane.showMessageDialog(null, "Ordem de serviço salva com sucesso");
-            
-        } catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar OS: "+e);
+            limparCampos();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar OS: " + e);
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void cbClienteAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbClienteAncestorAdded
-        try{
+        try {
             ClientesDAO dao = new ClientesDAO();
             List<Clientes> listaClientes = dao.listarTodosClientes();
-            for(Clientes cliente : listaClientes){
+            for (Clientes cliente : listaClientes) {
                 cbCliente.addItem(cliente);
             }
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
     }//GEN-LAST:event_cbClienteAncestorAdded
 
     private void cbUsuarioAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbUsuarioAncestorAdded
-        try{
+        try {
             UsuariosDAO dao = new UsuariosDAO();
             List<Usuarios> listaUsuarios = dao.listarTodosUsuarios();
-            for(Usuarios usuario : listaUsuarios){
+            for (Usuarios usuario : listaUsuarios) {
                 cbUsuario.addItem(usuario);
             }
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
     }//GEN-LAST:event_cbUsuarioAncestorAdded
 
     private void cbServicoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbServicoAncestorAdded
-        try{
+        try {
             ServicosDAO dao = new ServicosDAO();
             List<Servicos> listaServicos = dao.listarTodosServicos();
-            for(Servicos servico : listaServicos){
+            for (Servicos servico : listaServicos) {
                 cbServico.addItem(servico);
             }
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
     }//GEN-LAST:event_cbServicoAncestorAdded
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // Pega a hora do sistema
+        pegarHora();
+
+        // Listar todas as OS
+        listarOS();
+    }//GEN-LAST:event_formWindowActivated
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        try {
+            OrdemServicoDAO dao = new OrdemServicoDAO();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
