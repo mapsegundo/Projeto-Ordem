@@ -201,7 +201,7 @@ public class OrdemServicoDAO {
         return listaOS;
     }
 
-    public List<OrdemServicos> consultarPorServico(int servico) {
+    public List<OrdemServicos> consultarPorServico(String servico) {
         List<OrdemServicos> listaOS = null;
         try {
             //Criar vetor que vai armazenar as ordens de servico
@@ -214,11 +214,11 @@ public class OrdemServicoDAO {
                     + "inner join tbclientes as cli on (os.fkIdCliente = cli.idCliente) "
                     + "inner join tbservicos as ser on (os.fkIdServico = ser.idServico) "
                     + "inner join tbusuarios as usu on (os.fkIdUsuario = usu.idUsuario) "
-                    + "where ser.idServico=?";
+                    + "where ser.nomeServico like ?";
 
             //Executar o comando
             PreparedStatement stmt = conexao.prepareStatement(cmdSql);
-            stmt.setInt(1, servico);
+            stmt.setString(1, servico);
             ResultSet rs = stmt.executeQuery();
 
             //Percorrer os resultados no RS e colocados dentro da lista
@@ -265,7 +265,7 @@ public class OrdemServicoDAO {
                     + "inner join tbclientes as cli on (os.fkIdCliente = cli.idCliente) "
                     + "inner join tbservicos as ser on (os.fkIdServico = ser.idServico) "
                     + "inner join tbusuarios as usu on (os.fkIdUsuario = usu.idUsuario) "
-                    + "where os.idOrdem = ?";
+                    + "where os.idOrdem like ?";
 
             //Executar o comando
             PreparedStatement stmt = conexao.prepareStatement(cmdSql);

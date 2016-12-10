@@ -14,6 +14,7 @@ import br.com.projeto.modelos.OrdemServicos;
 import br.com.projeto.modelos.Servicos;
 import br.com.projeto.modelos.Usuarios;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -242,6 +243,8 @@ public class FrmOrdemServico extends javax.swing.JFrame {
 
         jLabel8.setText("Filtro:");
 
+        cbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Data", "Serviço", "OS" }));
+
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -351,7 +354,50 @@ public class FrmOrdemServico extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here:
+        // Botao para filtrar a busca
+        //Criar list de ordem de servico
+        try {
+            List<OrdemServicos> listaOS = new ArrayList<>();
+            OrdemServicoDAO dao = new OrdemServicoDAO();
+            Date data = txtData.getDate();
+            SimpleDateFormat formataData = new SimpleDateFormat("yyyy-MM-dd");
+
+            //Recebe o texto digitado no filtro
+            String termo = "%" + txtFiltro.getText() + "%";
+
+            // Caso o usuário tenha escolhido a Data
+            if (cbFiltro.getSelectedIndex() == 0) {
+                listaOS = dao.consultarPorData(formataData.format(data));
+
+            } else if (cbFiltro.getSelectedIndex() == 1) {
+                listaOS = dao.consultarPorServico(termo);
+
+            } else if (cbFiltro.getSelectedIndex() == 2) {
+                String recebeFiltro = txtFiltro.getText().replaceAll(" ", "");
+                listaOS = dao.consultarPorId(Integer.parseInt(recebeFiltro));
+            }
+            DefaultTableModel modelo = (DefaultTableModel) tabelaOS.getModel();
+
+            //Zerar linhas
+            modelo.setNumRows(0);
+
+            //Percorrer os registros que estão na listaOS
+            for (OrdemServicos os : listaOS) {
+                modelo.addRow(new Object[]{
+                    os.getIdOrdem(),
+                    os.getFkIdCliente(),
+                    os.getFkIdServico(),
+                    os.getFkIdUsuario(),
+                    os.getDescricaoServico(),
+                    os.getDataCadastro(),
+                    os.getHoraServico()
+                });
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Valor de filtro incorreto");
+            listarOS();
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
