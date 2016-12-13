@@ -13,10 +13,16 @@ import br.com.projeto.modelos.Clientes;
 import br.com.projeto.modelos.OrdemServicos;
 import br.com.projeto.modelos.Servicos;
 import br.com.projeto.modelos.Usuarios;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,6 +32,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FrmOrdemServico extends javax.swing.JFrame {
 
+    private int recebeId;
     /**
      * Creates new form FrmOrdemServicos
      */
@@ -134,32 +141,32 @@ public class FrmOrdemServico extends javax.swing.JFrame {
         jLabel5.setText("Descrição:");
 
         cbCliente.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 cbClienteAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
         });
 
         cbUsuario.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 cbUsuarioAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
         });
 
         cbServico.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 cbServicoAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
 
@@ -245,6 +252,7 @@ public class FrmOrdemServico extends javax.swing.JFrame {
 
         cbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Data", "Serviço", "OS" }));
 
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/botaoFiltrar.png"))); // NOI18N
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -290,8 +298,14 @@ public class FrmOrdemServico extends javax.swing.JFrame {
                 "ID", "Cliente", "Serviço", "Usuário", "Descrição", "Data Cadastro", "Hora Serviço"
             }
         ));
+        tabelaOS.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaOSMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tabelaOS);
 
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/botaoSalvar.png"))); // NOI18N
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -299,8 +313,15 @@ public class FrmOrdemServico extends javax.swing.JFrame {
             }
         });
 
+        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/botaoAlterar.png"))); // NOI18N
         btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/botaExcluir.png"))); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -344,9 +365,9 @@ public class FrmOrdemServico extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnExcluir)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -475,10 +496,76 @@ public class FrmOrdemServico extends javax.swing.JFrame {
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         try {
-            OrdemServicoDAO dao = new OrdemServicoDAO();
+            int op;
+            //tela de operação de escolha
+            op = JOptionPane.showConfirmDialog(null, "Você deseja excluir a OS?", "Excluir", 0);
+
+            if (op == 0) {
+                OrdemServicoDAO dao = new OrdemServicoDAO();
+                dao.excluirOS(recebeId);
+
+                JOptionPane.showMessageDialog(null, "OS excluída com sucesso!");
+                listarOS();
+            }
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir OS: " + e);
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void tabelaOSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaOSMouseClicked
+        // Pegar campos da tabela
+        try {
+            recebeId = Integer.parseInt(tabelaOS.getValueAt(tabelaOS.getSelectedRow(), 0).toString());
+            cbCliente.getModel().setSelectedItem(tabelaOS.getValueAt(tabelaOS.getSelectedRow(), 1).toString());
+            cbServico.getModel().setSelectedItem(tabelaOS.getValueAt(tabelaOS.getSelectedRow(), 2).toString());
+            cbUsuario.getModel().setSelectedItem(tabelaOS.getValueAt(tabelaOS.getSelectedRow(), 3).toString());
+            txtDescricao.setText(tabelaOS.getValueAt(tabelaOS.getSelectedRow(), 4).toString());
+            //Converter data
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat formata = new SimpleDateFormat("yyyy-MM-dd");
+            cal.setTime(formata.parse(tabelaOS.getValueAt(tabelaOS.getSelectedRow(), 5).toString()));
+            txtData.setCalendar(cal);
+            txtHora.setText(tabelaOS.getValueAt(tabelaOS.getSelectedRow(), 6).toString());
+            //System.out.println(getRecebeId());
+        } catch (Exception e) {
+
+        }
+    }//GEN-LAST:event_tabelaOSMouseClicked
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        // Alterar campos da OS
+        try {
+            OrdemServicos os = new OrdemServicos();
+            os.setIdOrdem(recebeId);
+            Clientes cliente = (Clientes) cbCliente.getSelectedItem();
+            int idCliente = cliente.getIdCliente();
+            Usuarios usuario = (Usuarios) cbUsuario.getSelectedItem();
+            int idUsuario = usuario.getIdUsuario();
+            Servicos servico = (Servicos) cbServico.getSelectedItem();
+            int idServico = servico.getIdServico();
+
+            //Preenche o objeto OS com os dados capturados da tela
+            os.setFkIdCliente(cliente);
+            os.setFkIdUsuario(usuario);
+            os.setFkIdServico(servico);
+            os.setDescricaoServico(txtDescricao.getText());
+
+            //Formatar Data
+            Date data = txtData.getDate();
+            SimpleDateFormat formata = new SimpleDateFormat("yyyy-MM-dd");
+            os.setDataCadastro(formata.format(data));
+            os.setHoraServico(txtHora.getText());
+
+            OrdemServicoDAO dao = new OrdemServicoDAO();
+            dao.alterarOS(os, idCliente, idServico, idUsuario);
+
+            JOptionPane.showMessageDialog(null, "Ordem de serviço alterada com sucesso");
+            limparCampos();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao alterar OS: " + e);
+        }
+
+    }//GEN-LAST:event_btnAlterarActionPerformed
 
     /**
      * @param args the command line arguments

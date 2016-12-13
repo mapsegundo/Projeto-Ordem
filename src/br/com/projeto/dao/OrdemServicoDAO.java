@@ -54,7 +54,7 @@ public class OrdemServicoDAO {
         }
     }
 
-    public void alterarOS(OrdemServicos os) {
+    public void alterarOS(OrdemServicos os, int c, int s, int u) {
         try {
             //Criar comando SQL
             String cmdSql = "update tbordemservicos set fkIdCliente=?, fkIdServico=?, fkIdUsuario=?, descricaoServico=?, dataCadastro=?, horaServico=? where idOrdem=?";
@@ -80,14 +80,14 @@ public class OrdemServicoDAO {
         }
     }
 
-    public void excluirOS(OrdemServicos os) {
+    public void excluirOS(int id) {
         try {
             //Criar comando SQL
             String cmdSql = "delete from tbordemservicos where idOrdem=?";
 
             //Estruturar comando SQL 
             PreparedStatement stmt = conexao.prepareStatement(cmdSql);
-            stmt.setInt(1, os.getIdOrdem());
+            stmt.setInt(1, id);
 
             //Executar o comando
             stmt.execute();

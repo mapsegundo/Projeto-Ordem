@@ -238,6 +238,7 @@ public class FrmServicos extends javax.swing.JFrame {
                 .addGap(47, 47, 47))
         );
 
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/botaoSalvar.png"))); // NOI18N
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -245,6 +246,7 @@ public class FrmServicos extends javax.swing.JFrame {
             }
         });
 
+        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/botaoAlterar.png"))); // NOI18N
         btnAlterar.setText("Alterar");
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -252,6 +254,7 @@ public class FrmServicos extends javax.swing.JFrame {
             }
         });
 
+        btnDeletar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/botaExcluir.png"))); // NOI18N
         btnDeletar.setText("Excluir");
         btnDeletar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -271,12 +274,12 @@ public class FrmServicos extends javax.swing.JFrame {
             }
         ));
         tabelaServicos.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 tabelaServicosAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         tabelaServicos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -288,7 +291,8 @@ public class FrmServicos extends javax.swing.JFrame {
 
         jLabel8.setText("Filtrar por ID:");
 
-        jButton1.setText("Enviar");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/botaoFiltrar.png"))); // NOI18N
+        jButton1.setText("Buscar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);

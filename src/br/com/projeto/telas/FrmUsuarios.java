@@ -180,6 +180,7 @@ public class FrmUsuarios extends javax.swing.JFrame {
         );
 
         btnSalvar.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/botaoSalvar.png"))); // NOI18N
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -188,6 +189,7 @@ public class FrmUsuarios extends javax.swing.JFrame {
         });
 
         btnAlterar.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/botaoAlterar.png"))); // NOI18N
         btnAlterar.setText("Alterar");
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -196,6 +198,7 @@ public class FrmUsuarios extends javax.swing.JFrame {
         });
 
         btnExcluir.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/botaExcluir.png"))); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -204,6 +207,7 @@ public class FrmUsuarios extends javax.swing.JFrame {
         });
 
         btnNovo.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/botaoNovo.png"))); // NOI18N
         btnNovo.setText("Novo");
         btnNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -223,12 +227,12 @@ public class FrmUsuarios extends javax.swing.JFrame {
             }
         ));
         tabelaUsuario.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 tabelaUsuarioAncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         tabelaUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
