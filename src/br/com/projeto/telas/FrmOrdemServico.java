@@ -116,7 +116,7 @@ public class FrmOrdemServico extends javax.swing.JFrame {
         btnAlterar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Projeto Ordem");
         setPreferredSize(new java.awt.Dimension(739, 604));
         setResizable(false);
@@ -452,8 +452,10 @@ public class FrmOrdemServico extends javax.swing.JFrame {
 
     private void cbClienteAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbClienteAncestorAdded
         try {
+            cbCliente.removeAllItems();
             ClientesDAO dao = new ClientesDAO();
             List<Clientes> listaClientes = dao.listarTodosClientes();
+            
             for (Clientes cliente : listaClientes) {
                 cbCliente.addItem(cliente);
             }
@@ -464,6 +466,7 @@ public class FrmOrdemServico extends javax.swing.JFrame {
 
     private void cbUsuarioAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbUsuarioAncestorAdded
         try {
+            cbUsuario.removeAllItems();
             UsuariosDAO dao = new UsuariosDAO();
             List<Usuarios> listaUsuarios = dao.listarTodosUsuarios();
             for (Usuarios usuario : listaUsuarios) {
@@ -476,6 +479,7 @@ public class FrmOrdemServico extends javax.swing.JFrame {
 
     private void cbServicoAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_cbServicoAncestorAdded
         try {
+            cbServico.removeAllItems();
             ServicosDAO dao = new ServicosDAO();
             List<Servicos> listaServicos = dao.listarTodosServicos();
             for (Servicos servico : listaServicos) {

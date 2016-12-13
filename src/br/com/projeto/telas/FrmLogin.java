@@ -36,7 +36,7 @@ public class FrmLogin extends javax.swing.JFrame {
         btnSair = new javax.swing.JButton();
         lblEsqueciSenha = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login");
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N

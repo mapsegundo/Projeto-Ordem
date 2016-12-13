@@ -5,15 +5,21 @@
  */
 package br.com.projeto.telas;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Shall
  */
 public class FrmMenu extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrmMenu
-     */
+    //Criando objetos
+    FrmUsuarios telaUsuarios = new FrmUsuarios();
+    FrmClientes telaClientes = new FrmClientes();
+    FrmServicos telaServicos = new FrmServicos();
+    FrmOrdemServico telaOS = new FrmOrdemServico();
+    
+    
     public FrmMenu() {
         initComponents();
     }
@@ -30,16 +36,16 @@ public class FrmMenu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        menuControleUsuarios = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        menuControleClientes = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        menuControleServicos = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        menuControleOS = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
+        menuSobre = new javax.swing.JMenuItem();
+        menuSair = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistem de Ordem de Serviços");
@@ -48,46 +54,76 @@ public class FrmMenu extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/planoDeFundo.jpg"))); // NOI18N
 
         jMenu1.setText("Usuários");
+        jMenu1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/controleUsuarios.png"))); // NOI18N
-        jMenuItem1.setText("Controle de Usuários");
-        jMenu1.add(jMenuItem1);
+        menuControleUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/controleUsuarios.png"))); // NOI18N
+        menuControleUsuarios.setText("Controle de Usuários");
+        menuControleUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuControleUsuariosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuControleUsuarios);
 
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Clientes");
+        jMenu2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
 
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/controleClientes.png"))); // NOI18N
-        jMenuItem2.setText("Controle de Clientes");
-        jMenu2.add(jMenuItem2);
+        menuControleClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/controleClientes.png"))); // NOI18N
+        menuControleClientes.setText("Controle de Clientes");
+        menuControleClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuControleClientesActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuControleClientes);
 
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Serviços");
+        jMenu3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
 
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/controleServicos.png"))); // NOI18N
-        jMenuItem3.setText("Controle de Serviços");
-        jMenu3.add(jMenuItem3);
+        menuControleServicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/controleServicos.png"))); // NOI18N
+        menuControleServicos.setText("Controle de Serviços");
+        menuControleServicos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuControleServicosActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menuControleServicos);
 
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Ordem de Serviços");
+        jMenu4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
 
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/controleOS.png"))); // NOI18N
-        jMenuItem4.setText("Controle de Ordem de Serviços");
-        jMenu4.add(jMenuItem4);
+        menuControleOS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/controleOS.png"))); // NOI18N
+        menuControleOS.setText("Controle de Ordem de Serviços");
+        menuControleOS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuControleOSActionPerformed(evt);
+            }
+        });
+        jMenu4.add(menuControleOS);
 
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Configurações");
+        jMenu5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
 
-        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/menuSobre.png"))); // NOI18N
-        jMenuItem6.setText("Sobre");
-        jMenu5.add(jMenuItem6);
+        menuSobre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/menuSobre.png"))); // NOI18N
+        menuSobre.setText("Sobre");
+        jMenu5.add(menuSobre);
 
-        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/menuSair.png"))); // NOI18N
-        jMenuItem5.setText("Sair");
-        jMenu5.add(jMenuItem5);
+        menuSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/menuSair.png"))); // NOI18N
+        menuSair.setText("Sair");
+        menuSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSairActionPerformed(evt);
+            }
+        });
+        jMenu5.add(menuSair);
 
         jMenuBar1.add(jMenu5);
 
@@ -106,6 +142,54 @@ public class FrmMenu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void menuControleUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuControleUsuariosActionPerformed
+        // Acao do menu controle de usuarios
+        //Se a tela estiver aberta
+        if(telaUsuarios.isVisible()){
+            //Chame a tela ja aberta
+            telaUsuarios.toFront();
+        } else{
+            telaUsuarios.setVisible(true);
+        }
+    }//GEN-LAST:event_menuControleUsuariosActionPerformed
+
+    private void menuControleClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuControleClientesActionPerformed
+        if(telaClientes.isVisible()){
+            //Chame a tela ja aberta
+            telaClientes.toFront();
+        } else{
+            telaClientes.setVisible(true);
+        }
+    }//GEN-LAST:event_menuControleClientesActionPerformed
+
+    private void menuControleOSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuControleOSActionPerformed
+        if(telaOS.isVisible()){
+            //Chame a tela ja aberta
+            telaOS.toFront();
+        } else{
+            telaOS.setVisible(true);
+        }
+    }//GEN-LAST:event_menuControleOSActionPerformed
+
+    private void menuControleServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuControleServicosActionPerformed
+        if(telaServicos.isVisible()){
+            //Chame a tela ja aberta
+            telaServicos.toFront();
+        } else{
+            telaServicos.setVisible(true);
+        }
+    }//GEN-LAST:event_menuControleServicosActionPerformed
+
+    private void menuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSairActionPerformed
+        // Fecha a janela
+        int op;
+            //tela de operação de escolha
+            op = JOptionPane.showConfirmDialog(null, "Deseja realmente sair?", "Sair do Sistema", 0);
+            if(op == 0){
+                System.exit(0);
+            }
+    }//GEN-LAST:event_menuSairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,11 +234,11 @@ public class FrmMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem menuControleClientes;
+    private javax.swing.JMenuItem menuControleOS;
+    private javax.swing.JMenuItem menuControleServicos;
+    private javax.swing.JMenuItem menuControleUsuarios;
+    private javax.swing.JMenuItem menuSair;
+    private javax.swing.JMenuItem menuSobre;
     // End of variables declaration//GEN-END:variables
 }
