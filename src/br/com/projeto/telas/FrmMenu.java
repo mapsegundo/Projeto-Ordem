@@ -49,12 +49,14 @@ public class FrmMenu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistem de Ordem de Serviços");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/planoDeFundo.jpg"))); // NOI18N
 
         jMenu1.setText("Usuários");
         jMenu1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jMenu1.setMargin(new java.awt.Insets(0, 0, 0, 15));
 
         menuControleUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/controleUsuarios.png"))); // NOI18N
         menuControleUsuarios.setText("Controle de Usuários");
@@ -69,6 +71,7 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jMenu2.setText("Clientes");
         jMenu2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jMenu2.setMargin(new java.awt.Insets(0, 0, 0, 15));
 
         menuControleClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/controleClientes.png"))); // NOI18N
         menuControleClientes.setText("Controle de Clientes");
@@ -83,6 +86,7 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jMenu3.setText("Serviços");
         jMenu3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jMenu3.setMargin(new java.awt.Insets(0, 0, 0, 15));
 
         menuControleServicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/controleServicos.png"))); // NOI18N
         menuControleServicos.setText("Controle de Serviços");
@@ -97,6 +101,7 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jMenu4.setText("Ordem de Serviços");
         jMenu4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jMenu4.setMargin(new java.awt.Insets(0, 0, 0, 15));
 
         menuControleOS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/controleOS.png"))); // NOI18N
         menuControleOS.setText("Controle de Ordem de Serviços");
@@ -111,6 +116,7 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jMenu5.setText("Configurações");
         jMenu5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jMenu5.setMargin(new java.awt.Insets(0, 0, 0, 15));
 
         menuSobre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/menuSobre.png"))); // NOI18N
         menuSobre.setText("Sobre");
@@ -141,6 +147,7 @@ public class FrmMenu extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuControleUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuControleUsuariosActionPerformed
