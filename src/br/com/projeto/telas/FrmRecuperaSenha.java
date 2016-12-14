@@ -6,25 +6,30 @@
 package br.com.projeto.telas;
 
 import br.com.projeto.dao.UsuariosDAO;
+import br.com.projeto.modelos.Usuarios;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Shall
  */
-public class FrmLogin extends javax.swing.JFrame {
+public class FrmRecuperaSenha extends javax.swing.JFrame {
 
     /**
-     * Creates new form FrmLogin
+     * Creates new form FrmRecuperaSenha
      */
-    public FrmLogin() {
-        initComponents();
+    public Boolean verificaSenha() {
+        return txtSenha.getText().equals(txtConfirmaSenha.getText());
     }
     
-    public void limparCampos() {
-        //Limpar campos
+    public void limparCampos(){
         txtUsuario.setText("");
         txtSenha.setText("");
+        txtConfirmaSenha.setText("");
+    }
+    
+    public FrmRecuperaSenha() {
+        initComponents();
     }
 
     /**
@@ -39,44 +44,35 @@ public class FrmLogin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         txtSenha = new javax.swing.JPasswordField();
-        btnEntrar = new javax.swing.JButton();
-        btnSair = new javax.swing.JButton();
-        lblEsqueciSenha = new javax.swing.JLabel();
+        txtConfirmaSenha = new javax.swing.JPasswordField();
+        txtAlterar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Login");
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Bem Vindo");
+        jLabel1.setText("Recuperar Senha");
         jLabel1.setToolTipText("");
 
         jLabel2.setText("Usuário:");
 
         jLabel3.setText("Senha:");
 
-        btnEntrar.setText("Entrar");
-        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
+        jLabel4.setText("Confirma Senha:");
+
+        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEntrarActionPerformed(evt);
+                txtUsuarioActionPerformed(evt);
             }
         });
 
-        btnSair.setText("Sair");
-        btnSair.addActionListener(new java.awt.event.ActionListener() {
+        txtAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/botaoAlterar.png"))); // NOI18N
+        txtAlterar.setText("Alterar");
+        txtAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSairActionPerformed(evt);
-            }
-        });
-
-        lblEsqueciSenha.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        lblEsqueciSenha.setForeground(new java.awt.Color(204, 0, 0));
-        lblEsqueciSenha.setText("Esqueci minha senha");
-        lblEsqueciSenha.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblEsqueciSenhaMouseClicked(evt);
+                txtAlterarActionPerformed(evt);
             }
         });
 
@@ -87,23 +83,20 @@ public class FrmLogin extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtSenha))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtSenha)
+                            .addComponent(txtConfirmaSenha)
+                            .addComponent(txtUsuario)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnEntrar)
-                                .addGap(7, 7, 7)
-                                .addComponent(btnSair))
-                            .addComponent(lblEsqueciSenha, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addComponent(txtAlterar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -120,11 +113,11 @@ public class FrmLogin extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblEsqueciSenha)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEntrar)
-                    .addComponent(btnSair))
+                    .addComponent(jLabel4)
+                    .addComponent(txtConfirmaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtAlterar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -132,36 +125,30 @@ public class FrmLogin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
+    private void txtAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAlterarActionPerformed
+        // Alterar senha
         try{
+        if(verificaSenha()){
+            Usuarios usuario = new Usuarios();
             UsuariosDAO dao = new UsuariosDAO();
-            String cargo = dao.efetuaLogin(txtUsuario.getText(), txtSenha.getText());
-            if(!cargo.equals("")){
-                FrmLogin.this.dispose();
-                FrmSplash splash = new FrmSplash();
-                splash.setCargo(cargo);
-                splash.setVisible(true);
-            }
+        usuario.setUsuario(txtUsuario.getText());
+        usuario.setSenha(txtSenha.getText());
+        usuario.setRepitaSenha(txtConfirmaSenha.getText());
+        dao.recuperarSenha(usuario);
+        JOptionPane.showMessageDialog(null, "Dados alterados com sucesso!");
+        FrmRecuperaSenha.this.dispose();
+        } else{
+            JOptionPane.showMessageDialog(null, "Senha de confirmação incorreta!");
             limparCampos();
-        }catch(Exception e){
-            
         }
-    }//GEN-LAST:event_btnEntrarActionPerformed
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro ao alterar os dados do usuário: "+e);
+        }
+    }//GEN-LAST:event_txtAlterarActionPerformed
 
-    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        int op;
-            //tela de operação de escolha
-            op = JOptionPane.showConfirmDialog(null, "Deseja realmente sair?", "Sair do Sistema", 0);
-            if(op == 0){
-                System.exit(0);
-            }
-    }//GEN-LAST:event_btnSairActionPerformed
-
-    private void lblEsqueciSenhaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblEsqueciSenhaMouseClicked
-        // Abrir formulario de recuperação de senha
-        FrmRecuperaSenha recuperarSenha = new FrmRecuperaSenha();
-        recuperarSenha.setVisible(true);
-    }//GEN-LAST:event_lblEsqueciSenhaMouseClicked
+    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -180,31 +167,31 @@ public class FrmLogin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmRecuperaSenha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmRecuperaSenha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmRecuperaSenha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmRecuperaSenha.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmLogin().setVisible(true);
+                new FrmRecuperaSenha().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnEntrar;
-    private javax.swing.JButton btnSair;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel lblEsqueciSenha;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JButton txtAlterar;
+    private javax.swing.JPasswordField txtConfirmaSenha;
     private javax.swing.JPasswordField txtSenha;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables

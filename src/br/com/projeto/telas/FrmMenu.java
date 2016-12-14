@@ -35,15 +35,15 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        menuUsuarios = new javax.swing.JMenu();
         menuControleUsuarios = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        menuClientes = new javax.swing.JMenu();
         menuControleClientes = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        menuServicos = new javax.swing.JMenu();
         menuControleServicos = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        menuOS = new javax.swing.JMenu();
         menuControleOS = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
+        menuConfiguracoes = new javax.swing.JMenu();
         menuSobre = new javax.swing.JMenuItem();
         menuSair = new javax.swing.JMenuItem();
 
@@ -54,9 +54,9 @@ public class FrmMenu extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/planoDeFundo.jpg"))); // NOI18N
 
-        jMenu1.setText("Usuários");
-        jMenu1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jMenu1.setMargin(new java.awt.Insets(0, 0, 0, 15));
+        menuUsuarios.setText("Usuários");
+        menuUsuarios.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        menuUsuarios.setMargin(new java.awt.Insets(0, 0, 0, 15));
 
         menuControleUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/controleUsuarios.png"))); // NOI18N
         menuControleUsuarios.setText("Controle de Usuários");
@@ -65,13 +65,13 @@ public class FrmMenu extends javax.swing.JFrame {
                 menuControleUsuariosActionPerformed(evt);
             }
         });
-        jMenu1.add(menuControleUsuarios);
+        menuUsuarios.add(menuControleUsuarios);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(menuUsuarios);
 
-        jMenu2.setText("Clientes");
-        jMenu2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jMenu2.setMargin(new java.awt.Insets(0, 0, 0, 15));
+        menuClientes.setText("Clientes");
+        menuClientes.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        menuClientes.setMargin(new java.awt.Insets(0, 0, 0, 15));
 
         menuControleClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/controleClientes.png"))); // NOI18N
         menuControleClientes.setText("Controle de Clientes");
@@ -80,13 +80,13 @@ public class FrmMenu extends javax.swing.JFrame {
                 menuControleClientesActionPerformed(evt);
             }
         });
-        jMenu2.add(menuControleClientes);
+        menuClientes.add(menuControleClientes);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(menuClientes);
 
-        jMenu3.setText("Serviços");
-        jMenu3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jMenu3.setMargin(new java.awt.Insets(0, 0, 0, 15));
+        menuServicos.setText("Serviços");
+        menuServicos.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        menuServicos.setMargin(new java.awt.Insets(0, 0, 0, 15));
 
         menuControleServicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/controleServicos.png"))); // NOI18N
         menuControleServicos.setText("Controle de Serviços");
@@ -95,13 +95,13 @@ public class FrmMenu extends javax.swing.JFrame {
                 menuControleServicosActionPerformed(evt);
             }
         });
-        jMenu3.add(menuControleServicos);
+        menuServicos.add(menuControleServicos);
 
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(menuServicos);
 
-        jMenu4.setText("Ordem de Serviços");
-        jMenu4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jMenu4.setMargin(new java.awt.Insets(0, 0, 0, 15));
+        menuOS.setText("Ordem de Serviços");
+        menuOS.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        menuOS.setMargin(new java.awt.Insets(0, 0, 0, 15));
 
         menuControleOS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/controleOS.png"))); // NOI18N
         menuControleOS.setText("Controle de Ordem de Serviços");
@@ -110,17 +110,17 @@ public class FrmMenu extends javax.swing.JFrame {
                 menuControleOSActionPerformed(evt);
             }
         });
-        jMenu4.add(menuControleOS);
+        menuOS.add(menuControleOS);
 
-        jMenuBar1.add(jMenu4);
+        jMenuBar1.add(menuOS);
 
-        jMenu5.setText("Configurações");
-        jMenu5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jMenu5.setMargin(new java.awt.Insets(0, 0, 0, 15));
+        menuConfiguracoes.setText("Configurações");
+        menuConfiguracoes.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        menuConfiguracoes.setMargin(new java.awt.Insets(0, 0, 0, 15));
 
         menuSobre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/menuSobre.png"))); // NOI18N
         menuSobre.setText("Sobre");
-        jMenu5.add(menuSobre);
+        menuConfiguracoes.add(menuSobre);
 
         menuSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/projeto/imagens/menuSair.png"))); // NOI18N
         menuSair.setText("Sair");
@@ -129,9 +129,9 @@ public class FrmMenu extends javax.swing.JFrame {
                 menuSairActionPerformed(evt);
             }
         });
-        jMenu5.add(menuSair);
+        menuConfiguracoes.add(menuSair);
 
-        jMenuBar1.add(jMenu5);
+        jMenuBar1.add(menuConfiguracoes);
 
         setJMenuBar(jMenuBar1);
 
@@ -235,17 +235,17 @@ public class FrmMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
+    public javax.swing.JMenu menuClientes;
+    private javax.swing.JMenu menuConfiguracoes;
     private javax.swing.JMenuItem menuControleClientes;
     private javax.swing.JMenuItem menuControleOS;
     private javax.swing.JMenuItem menuControleServicos;
     private javax.swing.JMenuItem menuControleUsuarios;
+    private javax.swing.JMenu menuOS;
     private javax.swing.JMenuItem menuSair;
+    public javax.swing.JMenu menuServicos;
     private javax.swing.JMenuItem menuSobre;
+    public javax.swing.JMenu menuUsuarios;
     // End of variables declaration//GEN-END:variables
 }

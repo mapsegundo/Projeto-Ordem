@@ -5,6 +5,8 @@
  */
 package br.com.projeto.telas;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Shall
@@ -14,6 +16,18 @@ public class FrmSplash extends javax.swing.JFrame {
     /**
      * Creates new form FrmSplash
      */
+    public String cargo;
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+    
+    
+    
     public FrmSplash() {
         initComponents();
     }
@@ -102,8 +116,29 @@ public class FrmSplash extends javax.swing.JFrame {
                 }
                 //fechar form do splash
                 FrmSplash.this.dispose();
+                
                 //chamar proximo form
-                new FrmMenu().setVisible(true);
+                FrmMenu menu = new FrmMenu();
+                //Define permissoes por cargo
+                if(cargo.equals("Gerente")){
+                    //Acesso total
+                    JOptionPane.showMessageDialog(null, "Bem vindo ao sistema Gerente");
+                    
+                    menu.setVisible(true);
+                } else if(cargo.equals("Funcionário")){
+                    // Acesso limitado
+                    JOptionPane.showMessageDialog(null, "Bem vindo ao sistema Funcionário");
+                    //definir acessos
+                    menu.menuClientes.setVisible(false);
+                    menu.menuUsuarios.setVisible(false);
+                    menu.menuServicos.setVisible(false);
+                    menu.setVisible(true);
+                } else if(cargo.equals("Diretor")){
+                    JOptionPane.showMessageDialog(null, "Bem vindo ao sistema Diretor");
+                    
+                    menu.setVisible(true);
+                }
+                
             }//fechar run
         }.start();
     }//GEN-LAST:event_formWindowActivated
